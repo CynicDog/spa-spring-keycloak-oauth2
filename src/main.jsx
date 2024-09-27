@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
-    <QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
         <AuthProvider>
             <App />
         </AuthProvider>
