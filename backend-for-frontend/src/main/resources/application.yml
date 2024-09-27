@@ -13,7 +13,7 @@ spring:
           predicates:
             - Path=/,/*.css,/*.js,/favicon.ico,/assets/**,/*.svg
         - id: authenticated-service-route
-          uri: ${AUTHENTICATED_SERVICE_URL:http://localhost:9001}/remote-service
+          uri: ${REMOTE_SERVICE_URL:http://localhost:9001}/remote-service
           predicates:
             - Path=/remote-service/**
       default-filters:

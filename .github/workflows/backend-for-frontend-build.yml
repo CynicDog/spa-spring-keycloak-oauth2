@@ -11,7 +11,7 @@ jobs:
   build:
     env:
       APP_NAME: spa-spring-keycloak-oauth2
-      AUTHENTICATED_SERVICE_URL: http://authenticated-service:9001
+      REMOTE_SERVICE_URL: http://remote-service:9001
       SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI: http://spa-spring-keycloak/realms/cynicdog
 
     runs-on: ubuntu-latest

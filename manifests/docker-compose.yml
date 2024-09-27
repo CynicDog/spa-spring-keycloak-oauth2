@@ -14,6 +14,17 @@ services:
       - REACT_UI_URL=http://react-ui:4173
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
 
+  remote-service:
+    depends_on:
+      - keycloak
+    image: "ghcr.io/cynicdog/spa-spring-keycloak-oauth2/remote-service:latest"
+    container_name: "remote-service"
+    ports:
+      - 9001:9001
+    environment:
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
+
+
   react-ui:
     depends_on:
       - backend-for-frontend
