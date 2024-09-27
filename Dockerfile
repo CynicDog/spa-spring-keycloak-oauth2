@@ -1,27 +1,12 @@
-# Use the official Node.js image as a parent image
-FROM node:20-alpine
-
-# Set the working directory
+FROM node:20-alpine as builder
 WORKDIR /app
-
-# Copy the package.json and package-lock.json (if available)
-COPY package.json ./
-COPY package-lock.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
+RUN npm install
 RUN npm run build
 
-# Set environment variables
-ENV PORT=5173
-
-# Expose port 5173
-EXPOSE 5173
-
-# Command to run the application
-CMD ["npm", "run", "preview", "--host"]
+FROM nginx:1.27.1-alpine-slim as prod
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf  /etc/nginx/conf.d
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
