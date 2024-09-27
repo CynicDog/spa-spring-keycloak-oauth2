@@ -1,11 +1,11 @@
 import GitHub from "../assets/GitHub.jsx";
 
-const GitHubAuthButton = ({githubLoginUrl}) => {
+const LoginButton = () => {
 
     return (
         <>
             <div style={{margin: "5px"}}>
-                <button onClick={() => { window.location.href = githubLoginUrl; }}>
+                <button onClick={() => { window.open('/oauth2/authorization/keycloak', '_self'); }}>
                     <GitHub />
                 </button>
             </div>
@@ -13,4 +13,4 @@ const GitHubAuthButton = ({githubLoginUrl}) => {
     )
 }
 
-export default GitHubAuthButton
+export default LoginButton

@@ -1,29 +1,20 @@
 import './App.css'
-import GitHubAuthButton from "./component/GitHubAuthButton.jsx";
-import AzureAuthButton from "./component/AzureAuthButton.jsx";
+import LoginButton from "./component/LoginButton.jsx";
 import {useAuth} from "../Context.jsx";
 
 function App() {
 
-    const {isGitHubAuthenticated, isAzureAuthenticated} = useAuth();
-
-    const githubLoginUrl = import.meta.env.VITE_GITHUB_LOGIN_URL;
-    const azureLoginUrl = import.meta.env.VITE_AZURE_LOGIN_URL
+    const { isUserAuthenticated } = useAuth();
 
     return (
         <>
             <div style={{display: "flex"}}>
-                {!isGitHubAuthenticated? (
-                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl }/>
+                {!isUserAuthenticated? (
+                    <LoginButton />
                 ): (
-                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl }/>
-                    /* Further renders on fetched data with authenticated requests */
-                )}
-                {!isAzureAuthenticated? (
-                    <AzureAuthButton azureLoginUrl={ azureLoginUrl }/>
-                ): (
-                    <AzureAuthButton azureLoginUrl={ azureLoginUrl }/>
-                    /* Further renders on fetched data with authenticated requests */
+                    <>
+                        /* Further renders on fetched data with authenticated requests */
+                    </>
                 )}
             </div>
         </>

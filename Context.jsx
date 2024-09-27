@@ -4,8 +4,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
 
-    const [isGitHubAuthenticated, setIsGitHubAuthenticated] = useState(false);
-    const [isAzureAuthenticated, setIsAzureAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
 
@@ -15,8 +14,7 @@ export const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={{
-            isGitHubAuthenticated,
-            isAzureAuthenticated
+            isAuthenticated,
         }}>
             {children}
         </AuthContext.Provider>
