@@ -13,7 +13,7 @@ public class UserController {
 
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-	@GetMapping("users")
+	@GetMapping("user")
 	public Mono<User> getUser(@AuthenticationPrincipal OidcUser oidcUser) {
 
 		log.info("Fetching information about the currently authenticated user");

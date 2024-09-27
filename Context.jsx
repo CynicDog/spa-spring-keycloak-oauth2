@@ -1,32 +1,38 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import {getCsrfToken} from "./util.js";
+import { createContext, useContext, useEffect, useState } from "react";
+import {getUser} from "./src/data/user.js";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-
+export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
+        const authenticate = async () => {
+            try {
+                const userData = await getUser(); // Use your existing getUser function
+                if (userData) {
+                    setIsAuthenticated(true);
+                    setUser(userData);
+                } else {
+                    setIsAuthenticated(false);
+                    setUser(null);
+                }
+            } catch (error) {
+                console.error("Authentication error:", error);
+                setIsAuthenticated(false);
+                setUser(null);
+            }
+        };
 
-        // parse cookie and set auth state variables
-        const token = getCsrfToken();
-
-        if (token !== null) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
-
+        authenticate();
     }, []);
 
     return (
-        <AuthContext.Provider value={{
-            isAuthenticated,
-        }}>
+        <AuthContext.Provider value={{ isAuthenticated, user }}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
 export const useAuth = () => useContext(AuthContext);

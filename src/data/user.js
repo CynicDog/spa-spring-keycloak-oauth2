@@ -1,16 +1,10 @@
-import {getCsrfToken} from "../../util.js";
+export const getUser = async () => {
 
-export const fetchUsers = async () => {
-
-    const token = getCsrfToken();
-
-    const response = await fetch('/users', {
+    const response = await fetch('/user', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': token // Include the CSRF token
+            'Content-Type': 'application/json'
         },
-        credentials: 'include' // Send cookies (SESSION, etc.) with the request
     });
 
     if (!response.ok) {
@@ -18,5 +12,6 @@ export const fetchUsers = async () => {
     }
 
     const data = await response.json();
+
     return data;
 }
