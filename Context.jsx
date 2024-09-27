@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {getUser} from "./src/data/user.js";
+import {getUser} from "./src/data/data.js";
 
 const AuthContext = createContext();
 
