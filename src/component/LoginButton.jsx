@@ -1,6 +1,3 @@
-import GitHub from "../assets/GitHub.jsx";
-import Azure from "../assets/Azure.jsx";
-
 const LoginButton = () => {
 
     return (
