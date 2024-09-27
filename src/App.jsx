@@ -9,22 +9,22 @@ const UsersList = () => {
 
     const { isAuthenticated } = useAuth();
 
-    // const { data: remoteData, error, isLoading } = useQuery(
-    //     ['remoteData'],
-    //     getRemoteData,
-    //     {
-    //         enabled: isAuthenticated,
-    //     }
-    // );
+    const { data: remoteData, error, isLoading } = useQuery(
+        ['remoteData'],
+        getRemoteData,
+        {
+            enabled: isAuthenticated,
+        }
+    );
 
     return (
         <>
             {isAuthenticated ? (
                 <>
                     Logged in.
-                    {/*{isLoading && <p>Loading...</p>}*/}
-                    {/*{error && <p>Error: {error.message}</p>}*/}
-                    {/*{remoteData && <p>{remoteData}</p>}*/}
+                    { isLoading && <p>Loading...</p> }
+                    { error && <p>Error: {error.message}</p> }
+                    { remoteData && <p>{remoteData}</p> }
                 </>
             ) : (
                 <LoginButton />
