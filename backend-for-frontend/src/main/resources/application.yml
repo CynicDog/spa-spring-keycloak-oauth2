@@ -12,6 +12,12 @@ spring:
           uri: ${REACT_UI_URL:http://localhost:8880}
           predicates:
             - Path=/,/*.css,/*.js,/favicon.ico,/assets/**,/*.svg
+        - id: authenticated-service-route
+          uri: ${AUTHENTICATED_SERVICE_URL:http://localhost:9001}/remote-service
+          predicates:
+            - Path=/remote-service/**
+      default-filters:
+        - TokenRelay
   security:
     oauth2:
       client:

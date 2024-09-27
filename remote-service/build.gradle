@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.google.cloud.tools.jib' version '3.4.3'
+}
+
+group = 'io.cynicdog'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(20)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = 'eclipse-temurin:20'
+		platforms {
+			platform {
+				os = "linux"
+				architecture = "arm64"
+			}
+			platform {
+				os = "linux"
+				architecture = "amd64"
+			}
+		}
+	}
+	to {
+		image = "ghcr.io/${System.getenv('GITHUB_REPOSITORY')?.toLowerCase() ?: 'default_repo'}/remote-service:latest"
+		auth {
+			username = "${System.getenv('GITHUB_ACTOR')?.toLowerCase() ?: 'default_actor'}"
+			password = "${System.getenv('GITHUB_TOKEN') ?: 'default_token'}"
+		}
+	}
+	container {
+		environment = [
+				'SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI': System.getenv('SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI') ?: 'http://localhost:8080/realms/cynicdog'
+		]
+	}
+}

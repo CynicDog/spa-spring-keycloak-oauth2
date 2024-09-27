@@ -1,3 +1,4 @@
+import './App.css'
 import {useAuth} from "../Context.jsx";
 import LoginButton from "./component/LoginButton.jsx";
 

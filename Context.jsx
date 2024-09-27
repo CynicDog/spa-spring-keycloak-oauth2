@@ -4,13 +4,14 @@ import {getUser} from "./src/data/user.js";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         const authenticate = async () => {
             try {
-                const userData = await getUser(); // Use your existing getUser function
+                const userData = await getUser();
                 if (userData) {
                     setIsAuthenticated(true);
                     setUser(userData);

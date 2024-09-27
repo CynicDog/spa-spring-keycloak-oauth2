@@ -1,11 +1,11 @@
-name: Backend For Frontend Service Spring Project CI with Gradle & Jib
+name: A Remote Service CI with Gradle & Jib
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'backend-for-frontend/**'
+      - 'remote-service/**'
   workflow_dispatch:
 jobs:
   build:
@@ -34,17 +34,17 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('backend-for-frontend/**/*.gradle*', 'backend-for-frontend/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('remote-service/**/*.gradle*', 'remote-service/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle
 
       # Grant execute permission for Gradle wrapper
       - name: Grant execute permission for Gradle wrapper
-        run: chmod +x backend-for-frontend/gradlew
+        run: chmod +x remote-service/gradlew
 
       # Run tests
       - name: Run tests
-        run: cd backend-for-frontend && ./gradlew test
+        run: cd remote-service && ./gradlew test
 
       # Build and push Docker image using Jib
       - name: Build and push Docker image
@@ -52,5 +52,5 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GHCR_PAT_TWO }}
-          REACT_UI_URL: http://react-ui:80
-        run: cd backend-for-frontend && ./gradlew jib
+          SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak/realms/cynicdog
+        run: cd remote-service && ./gradlew jib
