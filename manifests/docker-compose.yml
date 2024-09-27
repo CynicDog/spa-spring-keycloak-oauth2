@@ -21,8 +21,6 @@ services:
     container_name: "react-ui"
     ports:
       - 4173:4173
-    environment:
-      - GITHUB_LOGIN_URL=https://keycloak:8080/auth/realms/cynicdog/protocol/openid-connect/auth?client_id=Iv23liOFyDyAWFYUsq1v&redirect_uri=http://localhost:9000/login/oauth2/code/*&response_type=code&scope=openid
 
   # Backing Services
 
