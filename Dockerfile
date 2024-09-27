@@ -14,9 +14,6 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN npm run build
-
 # Set environment variables
 ARG PORT=4173
 ARG VITE_GITHUB_LOGIN_URL
@@ -25,6 +22,9 @@ ARG VITE_AZURE_LOGIN_URL
 ENV PORT=$PORT
 ENV VITE_GITHUB_LOGIN_URL=$VITE_GITHUB_LOGIN_URL
 ENV VITE_AZURE_LOGIN_URL=$VITE_AZURE_LOGIN_URL
+
+# Build the application
+RUN npm run build
 
 # Expose port 5173
 EXPOSE $PORT

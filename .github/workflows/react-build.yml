@@ -63,6 +63,7 @@ jobs:
           tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}/react-ui:latest
           build-args: |
             VITE_GITHUB_LOGIN_URL=${{ secrets.VITE_GITHUB_LOGIN_URL }}
+            VITE_AZURE_LOGIN_URL=${{ secrets.VITE_AZURE_LOGIN_URL }}
           outputs: type=image,name=target
 
 #          environment:
