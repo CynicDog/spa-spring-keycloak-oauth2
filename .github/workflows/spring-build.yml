@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'backend-for-frontend/**'
-      - './github/workflows'
   workflow_dispatch:
 jobs:
   build:
