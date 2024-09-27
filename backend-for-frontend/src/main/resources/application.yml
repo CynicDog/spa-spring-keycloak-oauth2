@@ -1,1 +1,25 @@
-spring.application.name=backend-for-frontend
+server:
+  port: 9000
+
+spring:
+  application:
+    name: backend-for-frontend
+
+  cloud:
+    gateway:
+      routes:
+        - id: react-ui-route
+          uri: ${REACT_UI_URL:http://localhost:8880}
+          predicates:
+            - Path=/,/*.css,/*.js,/favicon.ico
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: backend-for-frontend
+            client-secret: ${BFF_CLIENT_SECRET:bff_client_secret}
+            scope: openid, roles
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/cynicdog

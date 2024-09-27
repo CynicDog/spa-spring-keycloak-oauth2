@@ -14,15 +14,15 @@ function App() {
         <>
             <div style={{display: "flex"}}>
                 {!isGitHubAuthenticated? (
-                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl } message={"Login"} />
+                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl }/>
                 ): (
-                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl } message={"Logout"} />
+                    <GitHubAuthButton githubLoginUrl={ githubLoginUrl }/>
                     /* Further renders on fetched data with authenticated requests */
                 )}
                 {!isAzureAuthenticated? (
-                    <AzureAuthButton azureLoginUrl={ azureLoginUrl } message={"Login"} />
+                    <AzureAuthButton azureLoginUrl={ azureLoginUrl }/>
                 ): (
-                    <AzureAuthButton azureLoginUrl={ azureLoginUrl } message={"Logout"} />
+                    <AzureAuthButton azureLoginUrl={ azureLoginUrl }/>
                     /* Further renders on fetched data with authenticated requests */
                 )}
             </div>

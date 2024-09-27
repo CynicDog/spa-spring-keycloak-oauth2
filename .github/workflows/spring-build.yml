@@ -1,8 +1,10 @@
 name: Backend For Frontend Service Spring Project CI with Gradle & Jib
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-
 jobs:
   build:
     env:

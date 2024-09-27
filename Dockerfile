@@ -19,6 +19,6 @@ RUN npm run build
 # Use nginx for serving the built app
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE ${PORT:-80}
 
 LABEL org.opencontainers.image.source=https://github.com/CynicDog/spa-spring-keycloak-oauth2

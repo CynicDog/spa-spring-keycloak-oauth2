@@ -1,12 +1,12 @@
 import GitHub from "../assets/GitHub.jsx";
 
-const GitHubAuthButton = ({githubLoginUrl, message}) => {
+const GitHubAuthButton = ({githubLoginUrl}) => {
 
     return (
         <>
             <div style={{margin: "5px"}}>
                 <button onClick={() => { window.location.href = githubLoginUrl; }}>
-                    <GitHub /> {message}
+                    <GitHub />
                 </button>
             </div>
         </>

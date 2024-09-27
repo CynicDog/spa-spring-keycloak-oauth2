@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+
+  # Applications
+
+  backend-for-frontend:
+    depends_on:
+      - keycloak
+    image: "ghcr.io/cynicdog/spa-spring-keycloak-oauth2/backend-for-frontend-service:latest"
+    container_name: "backend-for-frontend"
+    ports:
+      - 9000:9000
+    environment:
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
+
+  react-ui:
+    depends_on:
+      - backend-for-frontend
+    image: "ghcr.io/cynicdog/spa-spring-keycloak-oauth2/react-ui:latest"
+    container_name: "react-ui"
+    ports:
+      - 8880:8880
+    environment:
+      - PORT=8880
+
+  # Backing Services
+
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    container_name: "keycloak"
+    command: start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=cynicdog
+      - KEYCLOAK_ADMIN_PASSWORD=cynicdog
+    ports:
+      - 8080:8080
