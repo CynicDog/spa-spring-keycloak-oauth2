@@ -11,7 +11,7 @@ services:
     ports:
       - 9000:9000
     environment:
-      - REACT_UI_URL=http://react-ui:5173
+      - REACT_UI_URL=http://react-ui:4173
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
 
   react-ui:
@@ -20,7 +20,7 @@ services:
     image: "ghcr.io/cynicdog/spa-spring-keycloak-oauth2/react-ui:latest"
     container_name: "react-ui"
     ports:
-      - 5173:5173
+      - 4173:4173
 
   # Backing Services
 
