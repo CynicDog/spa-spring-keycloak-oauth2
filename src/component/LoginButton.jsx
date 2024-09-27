@@ -1,4 +1,5 @@
 import GitHub from "../assets/GitHub.jsx";
+import Azure from "../assets/Azure.jsx";
 
 const LoginButton = () => {
 
@@ -6,7 +7,7 @@ const LoginButton = () => {
         <>
             <div style={{margin: "5px"}}>
                 <button onClick={() => { window.open('/oauth2/authorization/keycloak', '_self'); }}>
-                    <GitHub />
+                    login
                 </button>
             </div>
         </>
