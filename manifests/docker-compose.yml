@@ -12,6 +12,7 @@ services:
       - 9000:9000
     environment:
       - REACT_UI_URL=http://react-ui:4173
+      - REMOTE_SERVICE_URL=http://remote-service:9001
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
 
   remote-service:
@@ -23,7 +24,6 @@ services:
       - 9001:9001
     environment:
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://host.docker.internal:8080/realms/cynicdog
-
 
   react-ui:
     depends_on:
