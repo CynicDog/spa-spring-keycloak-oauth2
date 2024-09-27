@@ -63,11 +63,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT_TWO }}
 
+      - id: lower-repo
+        name: Repository to lowercase
+        run: |
+          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6.7.0
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/react-ui:latest
+          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}/react-ui:latest
           outputs: type=image,name=target
