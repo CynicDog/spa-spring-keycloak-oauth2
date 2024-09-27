@@ -20,9 +20,9 @@ services:
     image: "ghcr.io/cynicdog/spa-spring-keycloak-oauth2/react-ui:latest"
     container_name: "react-ui"
     ports:
-      - 8880:8880
+      - 5173:5173
     environment:
-      - PORT=8880
+      - PORT=5173
 
   # Backing Services
 
