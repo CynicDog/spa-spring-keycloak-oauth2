@@ -11,9 +11,7 @@ export const getUser = async () => {
         throw new Error('Failed to fetch user');
     }
 
-    const data = await response.json();
-
-    return data;
+    return await response.json();
 }
 
 export const getRemoteData = async () => {
@@ -28,8 +26,5 @@ export const getRemoteData = async () => {
         throw new Error('Failed to fetch remote data');
     }
 
-    const data = await response.json();
-    console.log(data);
-
-    return data;
+    return await response.text();
 };
