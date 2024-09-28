@@ -17,7 +17,7 @@ public class Controller {
     public Mono<String> processAuthorizedRemoteCall(@AuthenticationPrincipal Jwt jwt) {
         log.info("Fetching all orders");
 
-        return Mono.just("Awesome, here's a reply from the remote service");
+        return Mono.just("Awesome 👍🏻, here's the reply from the remote service.");
     }
 
 }
