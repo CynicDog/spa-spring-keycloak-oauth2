@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-for-frontend
+  labels:
+    app: backend-for-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-for-frontend
+  template:
+    metadata:
+      labels:
+        app: backend-for-frontend
+    spec:
+      containers:
+        - name: backend-for-frontend
+          image: ghcr.io/cynicdog/spa-spring-keycloak-oauth2/backend-for-frontend-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: REACT_UI_URL
+              value: http://react-ui:80
+            - name: REMOTE_SERVICE_URL
+              value: http://remote-service:80
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI
+              value: http://keycloak/realms/cynicdog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-for-frontend
+  labels:
+    app: backend-for-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: backend-for-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000

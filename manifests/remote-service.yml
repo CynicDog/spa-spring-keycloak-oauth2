@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remote-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remote-service
+  template:
+    metadata:
+      labels:
+        app: remote-service
+    spec:
+      containers:
+        - name: remote-service
+          image: ghcr.io/cynicdog/spa-spring-keycloak-oauth2/remote-service:latest
+          ports:
+            - containerPort: 9001
+          env:
+            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
+              value: http://keycloak/realms/cynicdog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: remote-service
+spec:
+  selector:
+    app: remote-service
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
