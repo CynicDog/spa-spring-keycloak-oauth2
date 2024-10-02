@@ -221,6 +221,6 @@ With client credentials above, run the following command on your KeyCloak admin 
 	-s providerId=github \
 	-s enabled=true  \
 	-s 'config.useJwksUrl="true"' \
-	-s config.clientId=Iv23liXSxMQvUKjH3Yvp \
-	-s config.clientSecret=07223282dcb2b836d1df1ceaecb2295733132ca2
+	-s config.clientId={CLIENT_ID} \
+	-s config.clientSecret={CLIENT_SECRET}
 ```
