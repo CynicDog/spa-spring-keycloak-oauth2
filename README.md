@@ -87,37 +87,6 @@ Then, expose the cluster to the local environment:
 minikube tunnel
 ```
 
-You'll be seeing the following result: 
-```
-http http://127.0.0.1/books
-
-HTTP/1.1 200 OK
-Connection: keep-alive
-Content-Type: application/json
-Date: Thu, 19 Sep 2024 03:30:02 GMT
-Transfer-Encoding: chunked
-X-RateLimit-Burst-Capacity: 20
-X-RateLimit-Remaining: 19
-X-RateLimit-Replenish-Rate: 10
-X-RateLimit-Requested-Tokens: 1
-
-[
-    {
-        "author": "Lyra Silverstar",
-        "createdDate": "2024-09-19T03:24:10.731070Z",
-        "id": 1,
-        "isbn": "1234567891",
-        "lastModifiedDate": "2024-09-19T03:24:10.731070Z",
-        "price": 9.9,
-        "publisher": "Polarsophia",
-        "title": "Northern Lights",
-        "version": 1
-    },
-    ... 
-]
-```
-
-
 # Defining a security realm on Keycloak 
 
 #### 1. Execute a bash session in the running container: 
@@ -168,21 +137,21 @@ Make sure you properly set the redirect URIs based on execution context.
 
 #### 6.1. Local Execution 
 ```
-./opt/keycloak/bin/kcadm.sh create clients -r PolarBookshop \
-    -s clientId=edge-service \
+    ./opt/keycloak/bin/kcadm.sh create clients -r {REALM_NAME} \
+    -s clientId={CLIENT_SERVICE_NAME} \
     -s enabled=true \
     -s publicClient=false \
-    -s secret=polar-keycloak-secret \
+    -s secret={SOME_SECRET} \
     -s 'redirectUris=["http://localhost:9000", "http://localhost:9000/login/oauth2/code/*"]'
 ```
 
 #### 6.2. Containerized Execution (Docker Compose)
 ```
-./opt/keycloak/bin/kcadm.sh create clients -r PolarBookshop \
-    -s clientId=edge-service \
+./opt/keycloak/bin/kcadm.sh create clients -r {REALM_NAME} \
+    -s clientId={CLIENT_SERVICE_NAME} \
     -s enabled=true \
     -s publicClient=false \
-    -s secret=polar-keycloak-secret \
+    -s secret={SOME_SECRET} \
     -s 'redirectUris=["http://edge-service:9000", "http://edge-service:9000/login/oauth2/code/*"]'
 ```
 
@@ -193,8 +162,8 @@ First, start the Minikube tunnel to make both Keycloak and the edge-service acce
 ```
 minikube addons enable ingress 
 
-kubectl apply -f edgeservice-ingress.yml 
-kubectl apply -f keycloak-ingress.yml 
+kubectl apply -f ingress-bff.yml 
+kubectl apply -f ingress-keycloak.yml 
 
 minikube tunnel 
 ```
@@ -205,21 +174,53 @@ However, the Keycloak OAuth2 authentication flow requires requests with a URI th
 
 On terminal, run: 
 ```
-echo "<127.0.0.1 | ip-address> polar-keycloak" | sudo tee -a /etc/hosts
+echo "<127.0.0.1 | ip-address> keycloak" | sudo tee -a /etc/hosts
 ```
 
 If window, run as an administrator:
 ```
-Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 polar-keycloak"
+Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
 ```
 
 Now with the correct redirect URIs, let's bind the `edge-service` client to KeyCloak.  
 ```
-./opt/keycloak/bin/kcadm.sh create clients -r PolarBookshop \
-    -s clientId=edge-service \
+./opt/keycloak/bin/kcadm.sh create clients -r {REALM_NAME} \
+    -s clientId={CLIENT_SERVICE_NAME} \
     -s enabled=true \
     -s publicClient=false \
-    -s secret=polar-keycloak-secret \
+    -s secret={SOME_SECRET} \
     -s 'redirectUris=["http://127.0.0.1", "http://127.0.0.1/login/oauth2/code/*"]'
 ```
 > Ensure the IP address (127.0.0.1) matches the Minikube tunnel gateway (in linux, you can retrieve the specific IP by running `minikube ip`)`.
+
+# Create GitHub Identity Provider (GitHub Apps) 
+
+#### Create a GitHub App with Email Read Permission 
+
+<details>
+  <summary>Register Callback URL</summary>
+  <img src="https://github.com/user-attachments/assets/903abd67-2e19-4035-9266-9183c63a8247"></img>
+</details>
+
+<details>
+  <summary>Add Read-Access Scope on Email</summary>
+  <img src="https://github.com/user-attachments/assets/6a1e10c1-79d0-4928-8f33-b244e3505034"></img>
+</details>
+
+#### Register GitHub App Client ID and Secret as Keyclock Client information 
+<details>
+  <summary></summary>
+  <img src="https://github.com/user-attachments/assets/6a1e10c1-79d0-4928-8f33-b244e3505034"></img>
+</details>
+
+With client credentials above, run the following command on your KeyCloak admin agent:  
+```
+/opt/keycloak/bin/kcadm.sh create identity-provider/instances \
+	-r {REALM_NAME} \
+	-s alias=github \
+	-s providerId=github \
+	-s enabled=true  \
+	-s 'config.useJwksUrl="true"' \
+	-s config.clientId=Iv23liXSxMQvUKjH3Yvp \
+	-s config.clientSecret=07223282dcb2b836d1df1ceaecb2295733132ca2
+```
