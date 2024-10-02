@@ -3,15 +3,14 @@
 
 1. [Version Table](#version-table)
 2. [Minikube Deployment](#minikube-deployment)
-   - [Prerequisites](#prerequisites)
-   - [Steps (macOS & Windows)](#steps-macos--windows)
-     1. [Pull the Docker Image](#1-pull-the-docker-image)
-     2. [Start Minikube](#2-start-minikube)
-     3. [Load the Image onto Minikube (Optional)](#3-load-the-image-onto-minikube-optional)
-        - [For Linux/macOS](#31-for-linuxmacos)
-        - [For Windows](#32-for-windows)
-     4. [Apply the Manifest Files](#4-apply-the-manifest-files)
-     5. [Access the Application via Ingress](#5-access-the-application-via-ingress)
+     1. [Prerequisites](#1-prerequisites)
+     1. [Pull the Docker Image](#2-pull-the-docker-image)
+     2. [Start Minikube](#3-start-minikube)
+     3. [Load the Image onto Minikube (Optional)](#4-load-the-image-onto-minikube-optional)
+        - [For Linux/macOS](#41-for-linuxmacos)
+        - [For Windows](#42-for-windows)
+     4. [Apply the Manifest Files](#5-apply-the-manifest-files)
+     5. [Access the Application via Ingress](#6-access-the-application-via-ingress)
 3. [Defining a Security Realm on Keycloak](#defining-a-security-realm-on-keycloak)
    - [1. Execute a bash session in the running container](#1-execute-a-bash-session-in-the-running-container)
    - [2. Navigate to the CLI script directory and authenticate the session](#2-navigate-to-the-cli-script-directory-and-authenticate-the-session)
@@ -25,9 +24,6 @@
 4. [Create GitHub Identity Provider (GitHub Apps)](#create-github-identity-provider-github-apps)
    - [Create a GitHub App with Email Read Permission](#create-a-github-app-with-email-read-permission)
    - [Register GitHub App Client ID and Secret as Keycloak Client information](#register-github-app-client-id-and-secret-as-keycloak-client-information)
-
-
-Let me know if you need further adjustments!
 
 # Version Table
 
@@ -45,7 +41,7 @@ Deploy a Spring Boot application using Minikube on macOS and Windows with Ingres
 
 ---
 
-## Prerequisites
+## 1. Prerequisites
 
 - Docker
 - Minikube
@@ -54,59 +50,57 @@ Deploy a Spring Boot application using Minikube on macOS and Windows with Ingres
 
 ---
 
-# Steps (macOS & Windows)
-
-## 1. Pull the Docker Image
+## 2. Pull the Docker Image
 ```bash
 docker pull ghcr.io/cynicdog/cloud-native-spring-jib-k8s-action/catalog-service:latest
 ```
 > 1. Make sure to clear the previous credentials on `ghcr.io` in your local Docker context by running `docker logout ghcr.io`.
 > 2. You may specify the build platform of the image by adding `--platform` tag with the value `linux/amd64` or `linux/arm64`.
 
-## 2. Start Minikube
+## 3. Start Minikube
 ```bash
 minikube start --cpus 2 --memory 4g --driver docker
 ```
 > Assign compute resources at your need. 
 
-## 3. Load the Image onto Minikube (Optional) 
+## 4. Load the Image onto Minikube (Optional) 
 > You may skip this step if services are to be deployed declaratively using manifest files.
 
-### 3.1. For Linux/macOS:
-3.1.1. Set Docker to use Minikube’s environment:
+### 4.1. For Linux/macOS:
+4.1.1. Set Docker to use Minikube’s environment:
 ```bash
 eval $(minikube docker-env)
 ```
 
-3.1.2. Load the image into Minikube:
+4.1.2. Load the image into Minikube:
 ```bash
 minikube image load cynicdog/catalog-service:latest
 ```
 
-### 3.2. For Windows:
-3.2.1. Save the image as `.tar`:
+### 4.2. For Windows:
+4.2.1. Save the image as `.tar`:
 ```bash
 docker image save -o catalog-service-image.tar cynicdog/catalog-service:latest
 ```
 
-3.2.2. Load the image into Minikube:
+4.2.2. Load the image into Minikube:
 ```bash
 minikube image load catalog-service-image.tar
 ```
 
-## 4. Apply the Manifest Files
+## 5. Apply the Manifest Files
 
-4.1. Enable Ingress on Minikube (if not done already):
+5.1. Enable Ingress on Minikube (if not done already):
 ```bash
 minikube addons enable ingress
 ```
 
-4.2. Apply the Kubernetes deployment and service manifest:
+5.2. Apply the Kubernetes deployment and service manifest:
 ```bash
 kubectl apply -f ./manifest/
 ```
 
-## 5. Access the Application via Ingress
+## 6. Access the Application via Ingress
 
 Once the Ingress is applied, you can retrieve the Minikube IP:
 ```bash
