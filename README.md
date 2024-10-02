@@ -209,7 +209,7 @@ Now with the correct redirect URIs, let's bind the `edge-service` client to KeyC
 
 #### Register GitHub App Client ID and Secret as Keyclock Client information 
 <details>
-  <summary></summary>
+  <summary>Retrieve Client Credentials</summary>
   <img src="https://github.com/user-attachments/assets/6a1e10c1-79d0-4928-8f33-b244e3505034"></img>
 </details>
 
