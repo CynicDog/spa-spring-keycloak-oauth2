@@ -5,7 +5,7 @@ import {useQuery} from "react-query";
 import {getRemoteData} from "./data/data.js";
 
 
-const UsersList = () => {
+const App = () => {
 
     const { isAuthenticated } = useAuth();
 
@@ -33,4 +33,4 @@ const UsersList = () => {
     );
 };
 
-export default UsersList;
+export default App;
