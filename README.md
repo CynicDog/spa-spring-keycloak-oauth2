@@ -1,4 +1,35 @@
-## Version Table
+
+# Index
+
+1. [Version Table](#version-table)
+2. [Minikube Deployment](#minikube-deployment)
+   - [Prerequisites](#prerequisites)
+   - [Steps (macOS & Windows)](#steps-macos--windows)
+     1. [Pull the Docker Image](#1-pull-the-docker-image)
+     2. [Start Minikube](#2-start-minikube)
+     3. [Load the Image onto Minikube (Optional)](#3-load-the-image-onto-minikube-optional)
+        - [For Linux/macOS](#31-for-linuxmacos)
+        - [For Windows](#32-for-windows)
+     4. [Apply the Manifest Files](#4-apply-the-manifest-files)
+     5. [Access the Application via Ingress](#5-access-the-application-via-ingress)
+3. [Defining a Security Realm on Keycloak](#defining-a-security-realm-on-keycloak)
+   - [1. Execute a bash session in the running container](#1-execute-a-bash-session-in-the-running-container)
+   - [2. Navigate to the CLI script directory and authenticate the session](#2-navigate-to-the-cli-script-directory-and-authenticate-the-session)
+   - [3. Create a dedicated realm for a service](#3-create-a-dedicated-realm-for-a-service)
+   - [4. Create roles](#4-create-roles)
+   - [5. Add users and credentials](#5-add-users-and-credentials)
+   - [6. Register Edge Service as OAuth2 Client in the realm](#6-register-edge-service-as-oauth2-client-in-the-realm)
+     - [6.1. Local Execution](#61-local-execution)
+     - [6.2. Containerized Execution (Docker Compose)](#62-containerized-execution-docker-compose)
+     - [6.3. Kubernetes Execution](#63-kubernetes-execution)
+4. [Create GitHub Identity Provider (GitHub Apps)](#create-github-identity-provider-github-apps)
+   - [Create a GitHub App with Email Read Permission](#create-a-github-app-with-email-read-permission)
+   - [Register GitHub App Client ID and Secret as Keycloak Client information](#register-github-app-client-id-and-secret-as-keycloak-client-information)
+
+
+Let me know if you need further adjustments!
+
+# Version Table
 
 |             | Version       |
 |-------------|---------------|
